@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.env
+/data/iris.csv
+/model/iris_model.pkl

@@ -1,0 +1,67 @@
+name: IRIS ML CI Pipeline
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  test-and-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Authenticate to GCP via Workload Identity Federation
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Pull data and model via DVC
+        run: dvc pull
+
+      - name: Run data validation tests
+        run: |
+          pytest tests/test_data.py -v --tb=short 2>&1 | tee test_data_output.txt
+
+      - name: Run model evaluation tests
+        run: |
+          pytest tests/test_model.py -v --tb=short 2>&1 | tee test_model_output.txt
+
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      - name: Publish CML Report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## 🌸 IRIS CI Report" > report.md
+          echo "### Model Metrics" >> report.md
+          cat model/metrics.json | python3 -c "
+          import json,sys
+          m=json.load(sys.stdin)
+          print(f'- **Accuracy**: {m[\"accuracy\"]}')
+          print(f'- **Precision**: {m[\"precision\"]}')
+          print(f'- **Recall**: {m[\"recall\"]}')
+          " >> report.md
+          echo "### Data Validation Tests" >> report.md
+          cat test_data_output.txt >> report.md
+          echo "### Model Evaluation Tests" >> report.md
+          cat test_model_output.txt >> report.md
+          cml comment create report.md
