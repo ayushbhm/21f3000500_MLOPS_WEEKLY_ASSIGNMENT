@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import mlflow
 import mlflow.sklearn
 from sklearn.datasets import load_iris
