@@ -1,0 +1,10 @@
+/iris.csv
+model.joblib
+*.pkl
+*.joblib
+mlruns/
+mlflow-artifacts/
+mlflow.db
+mlartifacts/
+mlruns/
+.ipynb_checkpoints/
