@@ -2,9 +2,10 @@ import os
 import mlflow
 import mlflow.sklearn
 import pandas as pd
+from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 
-MLFLOW_TRACKING_URI = os.environ.get("MLFLOW_TRACKING_URI", "http://34.59.123.187:8100")
+MLFLOW_TRACKING_URI = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:8100")
 MODEL_REGISTRY_NAME = "IRIS_DecisionTree"
 
 def fetch_model():
@@ -28,9 +29,8 @@ def predict(input_data):
     return predictions
 
 if __name__ == "__main__":
-    df     = pd.read_csv("iris.csv")
-    X      = df.drop("species", axis=1)
-    sample = X.head(5)
+    iris    = load_iris(as_frame=True)
+    sample  = iris.data.head(5)
     results = predict(sample)
     print("\nSample predictions:")
     for i, label in enumerate(results):
