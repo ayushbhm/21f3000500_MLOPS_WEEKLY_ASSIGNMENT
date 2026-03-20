@@ -2,6 +2,7 @@ import os
 import mlflow
 import mlflow.sklearn
 import pandas as pd
+import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
@@ -12,7 +13,7 @@ MODEL_REGISTRY_NAME = "IRIS_DecisionTree"
 def load_data():
     iris = load_iris(as_frame=True)
     X    = iris.data
-    y    = iris.target
+    y    = iris.target  # numeric: 0, 1, 2
     X.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
     _, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_test, y_test
@@ -37,11 +38,16 @@ def evaluate():
     X_test, y_test = load_data()
     y_pred         = model.predict(X_test)
 
+    # Convert both to same type (string) to avoid mix error
+    iris         = load_iris()
+    y_test_names = [iris.target_names[i] for i in y_test]
+    y_pred_names = y_pred if isinstance(y_pred[0], str) else [iris.target_names[i] for i in y_pred]
+
     metrics = {
-        "accuracy":  accuracy_score(y_test, y_pred),
-        "precision": precision_score(y_test, y_pred, average="weighted"),
-        "recall":    recall_score(y_test, y_pred, average="weighted"),
-        "f1_score":  f1_score(y_test, y_pred, average="weighted"),
+        "accuracy":  accuracy_score(y_test_names, y_pred_names),
+        "precision": precision_score(y_test_names, y_pred_names, average="weighted"),
+        "recall":    recall_score(y_test_names, y_pred_names, average="weighted"),
+        "f1_score":  f1_score(y_test_names, y_pred_names, average="weighted"),
     }
 
     print("\n── Evaluation Results ──────────────")
@@ -49,7 +55,7 @@ def evaluate():
         print(f"  {name:12s}: {val:.4f}")
 
     print("\n── Classification Report ───────────")
-    print(classification_report(y_test, y_pred, target_names=load_iris().target_names))
+    print(classification_report(y_test_names, y_pred_names, target_names=iris.target_names))
     return metrics
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 import os
 import mlflow
 import mlflow.sklearn
-import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 
@@ -23,16 +22,15 @@ def fetch_model():
         print(f"Loaded latest version: {latest.version}")
     return model
 
-def predict(input_data):
-    model       = fetch_model()
-    predictions = model.predict(input_data)
-    return predictions
-
 if __name__ == "__main__":
-    iris    = load_iris(as_frame=True)
-    sample  = iris.data.head(5)
-    sample.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-    results = predict(sample)
+    iris   = load_iris(as_frame=True)
+    X      = iris.data
+    X.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+    sample = X.head(5)
+    model  = fetch_model()
+    preds  = model.predict(sample)
+    iris2  = load_iris()
     print("\nSample predictions:")
-    for i, label in enumerate(results):
+    for i, p in enumerate(preds):
+        label = iris2.target_names[p] if isinstance(p, (int, np.integer)) else p
         print(f"  Sample {i+1}: {label}")
