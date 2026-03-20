@@ -13,6 +13,7 @@ def load_data():
     iris = load_iris(as_frame=True)
     X    = iris.data
     y    = iris.target
+    X.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
     _, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_test, y_test
 

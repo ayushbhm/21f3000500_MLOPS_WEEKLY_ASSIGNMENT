@@ -31,6 +31,7 @@ def predict(input_data):
 if __name__ == "__main__":
     iris    = load_iris(as_frame=True)
     sample  = iris.data.head(5)
+    sample.columns = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
     results = predict(sample)
     print("\nSample predictions:")
     for i, label in enumerate(results):
