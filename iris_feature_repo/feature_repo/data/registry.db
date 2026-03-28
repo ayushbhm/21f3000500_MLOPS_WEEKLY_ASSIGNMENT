@@ -1,0 +1,26 @@
+
+E
+%
+iris_id"iris_idJiris_feature_repo
+‹³ ÎĞıŒÎ‹³ ÎĞıŒÎ
+H
+(
+__dummy"
+__dummy_idJiris_feature_repo
+‹³ Îğõ™Î‹³ Îğõ™Î1"$d4d5fed6-6420-4cb8-a77d-aa427b48e1c4*¦³ Îø­•¯2–
+ã
+iris_featuresiris_feature_repoiris_id"
+sepal_length"
+sepal_width"
+petal_length"
+petal_width"
+species2€ç„:Ìevent_timestamp*created_timestampZhf/home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/iris_feature_repo/feature_repo/data/iris_data.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢f/home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/iris_feature_repo/feature_repo/data/iris_data.parquet’‹³ ÎØƒ×¹"‹³ Îà–õÍ@b
+iris_id.
+‹³ ÎĞ²¥Î¦³ ÎèËñ®
+€ÄÓÅÿÖ¡ÎR»
+¸
+,feast.infra.online_stores.sqlite.SqliteTable"‡
+d/home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/iris_feature_repo/feature_repo/data/online_store.dbiris_feature_repo_iris_featuresbàevent_timestamp*created_timestampZhf/home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/iris_feature_repo/feature_repo/data/iris_data.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢f/home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/iris_feature_repo/feature_repo/data/iris_data.parquetªiris_feature_repo’‹³ ÎØƒ×¹"‹³ Îà–õÍŠ3
+
+iris_feature_repo
+‹³ Î«»‹³ Î«»
