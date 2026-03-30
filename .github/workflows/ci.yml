@@ -2,7 +2,7 @@ name: CI-CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, week_7 ]
 
 jobs:
   deploy-and-test:
