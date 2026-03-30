@@ -12,6 +12,10 @@ iris = load_iris()
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
 df["target"] = iris.target
 
+# Second iteration: simulate new data
+extra = df.sample(20, replace=True)
+df = pd.concat([df, extra])
+
 df.to_csv("data/iris.csv", index=False)
 
 X = df.drop("target", axis=1)

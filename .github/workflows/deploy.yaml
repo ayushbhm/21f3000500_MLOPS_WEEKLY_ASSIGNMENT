@@ -1,0 +1,76 @@
+name: Build Deploy and Stress Test
+
+on:
+  push:
+    branches: [week_7]
+
+env:
+  PROJECT_ID: project-5e847658-f172-4998-bd0
+  GKE_CLUSTER: iris-cluster
+  GKE_ZONE: us-central1-a
+  IMAGE: gcr.io/project-5e847658-f172-4998-bd0/iris-api
+
+jobs:
+  build-deploy-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: auth
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker
+
+    - name: Build and Push Image
+      run: |
+        docker build -t $IMAGE:$GITHUB_SHA -t $IMAGE:latest .
+        docker push $IMAGE:$GITHUB_SHA
+        docker push $IMAGE:latest
+
+    - name: Get GKE Credentials
+      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+
+    - name: Deploy to GKE
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
+        kubectl apply -f k8s/hpa.yaml
+        kubectl set image deployment/iris-api iris-api=$IMAGE:$GITHUB_SHA
+        kubectl rollout status deployment/iris-api
+
+    - name: Get External IP
+      run: |
+        echo "Waiting for LoadBalancer IP..."
+        for i in {1..20}; do
+          IP=$(kubectl get svc iris-api-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          if [ -n "$IP" ]; then
+            echo "EXTERNAL_IP=$IP" >> $GITHUB_ENV
+            echo "Got IP: $IP"
+            break
+          fi
+          sleep 15
+        done
+
+    - name: Install wrk
+      run: sudo apt-get install -y wrk
+
+    - name: Stress Test 1000 connections
+      run: |
+        echo "=== Stress Test: 1000 connections, 3 replicas ==="
+        wrk -t4 -c1000 -d30s http://$EXTERNAL_IP/predict || true
+
+    - name: Patch HPA maxReplicas to 1
+      run: |
+        kubectl patch hpa iris-api-hpa -p '{"spec":{"maxReplicas":1}}'
+        sleep 30
+
+    - name: Stress Test 2000 connections constrained
+      run: |
+        echo "=== Stress Test: 2000 connections, maxReplicas=1 ==="
+        wrk -t4 -c2000 -d30s http://$EXTERNAL_IP/predict || true
