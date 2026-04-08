@@ -1,0 +1,14 @@
+artifact_uri: file:///home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/week8_mlsecops/mlruns/672860734084570328/b87bfa3aa83f487a93744bfc97d18faa/artifacts
+end_time: 1775669499032
+entry_point_name: ''
+experiment_id: '672860734084570328'
+lifecycle_stage: active
+run_id: b87bfa3aa83f487a93744bfc97d18faa
+run_name: placid-deer-451
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1775669494882
+status: 3
+tags: []
+user_id: jupyter

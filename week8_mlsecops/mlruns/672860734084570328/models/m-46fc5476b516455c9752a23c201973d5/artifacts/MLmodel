@@ -1,0 +1,23 @@
+artifact_path: file:///home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/week8_mlsecops/mlruns/672860734084570328/models/m-46fc5476b516455c9752a23c201973d5/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.19
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+    skops_trusted_types: null
+mlflow_version: 3.10.1
+model_id: m-46fc5476b516455c9752a23c201973d5
+model_size_bytes: 179302
+model_uuid: m-46fc5476b516455c9752a23c201973d5
+prompts: null
+run_id: b87bfa3aa83f487a93744bfc97d18faa
+utc_time_created: '2026-04-08 17:31:34.922408'

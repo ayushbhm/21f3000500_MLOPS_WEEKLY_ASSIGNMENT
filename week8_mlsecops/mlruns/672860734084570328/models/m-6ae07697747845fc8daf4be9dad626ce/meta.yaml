@@ -1,0 +1,10 @@
+artifact_location: file:///home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/week8_mlsecops/mlruns/672860734084570328/models/m-6ae07697747845fc8daf4be9dad626ce/artifacts
+creation_timestamp: 1775669502869
+experiment_id: '672860734084570328'
+last_updated_timestamp: 1775669506386
+model_id: m-6ae07697747845fc8daf4be9dad626ce
+model_type: null
+name: model
+source_run_id: 7f893ff563894021842b52c7ad15677d
+status: 2
+status_message: null

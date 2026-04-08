@@ -1,0 +1,7 @@
+artifact_location: file:///home/jupyter/21f3000500_MLOPS_WEEKLY_ASSIGNMENT/week8_mlsecops/mlruns/672860734084570328
+creation_time: 1775669494225
+experiment_id: '672860734084570328'
+last_update_time: 1775669494225
+lifecycle_stage: active
+name: iris_mlsecops_poisoning
+workspace: default
