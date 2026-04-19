@@ -1,21 +1,12 @@
-# IRIS ML Pipeline – Week 01
 
-## Objective
-Set up a cloud-based ML pipeline for IRIS classification using Vertex AI and Google Cloud Storage.
-
-## Implementation
-- Uploaded `iris.csv` to GCS.
-- Trained model in Vertex AI using data from GCS.
-- Stored model artifacts in GCS under timestamp-based folders.
-- Ran training twice to create two model versions.
-- Created `inference.py` to:
-  - Download model from GCS
-  - Download dataset from GCS
-  - Run predictions and print accuracy
-- Pushed all code to private GitHub repo under `week_01` branch.
-
-## Repository Files
-- `SDK_Custom_Container_Prediction.ipynb` – Training workflow
-- `inference.py` – Inference script
+## Files
+- iris_v1_train_submission.jsonl — Task 1 training data (input_text/output_text format)
+- iris_v2_train_submission.jsonl — Task 2 training data (input_text/output_text format)
+- iris_v1_train.jsonl — Gemini contents format used for actual fine-tuning (v1)
+- iris_v2_train.jsonl — Gemini contents format used for actual fine-tuning (v2)
+- iris_v1_test.jsonl — Test prompts for v1 model evaluation
+- iris_v2_test.jsonl — Test prompts for v2 model evaluation
+- iris_test_gt.csv — Ground truth labels for test set
+- evaluation_results.json — Full metrics including raw model outputs
 
 
